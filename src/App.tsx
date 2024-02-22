@@ -1,10 +1,12 @@
-import { List } from "./components/List/List";
+import { AllUsersPage } from "./pages/AllUsersPage";
+import { Route, Routes } from "react-router-dom";
+import { UserPage } from "./pages/UserPage";
 
 export const App = () => {
     return (
-        <>
-            <button>asdasdad</button>
-            <List />
-        </>
+        <Routes>
+            <Route element={<AllUsersPage />} path="/" />
+            <Route element={<UserPage />} path="/users/:id" />
+        </Routes>
     );
 };

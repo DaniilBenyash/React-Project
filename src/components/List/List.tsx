@@ -1,20 +1,31 @@
-import { useGetCards } from "../features/useGetCards";
-import { Card } from "../Card/Card";
+import { useUsersStore } from "../../store";
+import { useEffect } from "react";
+import { Box, CircularProgress, List as ListMUI } from "@mui/material";
+import { ListItem } from "../ListItem";
 
 export const List = () => {
-    const { cards, error, isLoading } = useGetCards();
+    const { users, getAllUsers, isLoading } = useUsersStore();
 
-    if (isLoading) return "is loading";
-    if (error) return error;
+    useEffect(() => {
+        getAllUsers();
+    }, [getAllUsers]);
+
+    if (isLoading) {
+        return (
+            <Box sx={{ margin: "0 auto" }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
     return (
-        <ul>
-            {cards.map(card => {
-                return (
-                    <li key={card.id}>
-                        <Card card={card} />
-                    </li>
-                );
-            })}
-        </ul>
+        <Box>
+            <nav aria-label="main mailbox folders">
+                <ListMUI disablePadding>
+                    {users?.map(user => (
+                        <ListItem id={user.id} name={user.name} key={user.id} />
+                    ))}
+                </ListMUI>
+            </nav>
+        </Box>
     );
 };

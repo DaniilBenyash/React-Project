@@ -1,21 +1,31 @@
-import { useGetCard } from "../features/useGetCard";
-import { Card as CardType } from "../features/useGetCard";
+import { useEffect } from "react";
+import { useParams } from "react-router";
+import { useUsersStore } from "src/store";
+import { CardName } from "../CardName";
+import { Box, CircularProgress } from "@mui/material";
 
-type CardProps = {
-    card: CardType;
-};
+export const Card = () => {
+    const { id } = useParams();
+    const { currentUser, getUserById, isLoading } = useUsersStore();
 
-export const Card = ({ card }: CardProps) => {
-    const { getCard, cardInfo, error, isLoading } = useGetCard();
-    const handleClick = () => {
-        getCard(card.id);
-    };
+    useEffect(() => {
+        getUserById(id);
+    }, [getUserById, id]);
 
-    console.log(cardInfo);
-    return (
-        <button onClick={handleClick}>
-            <div>{card.title}</div>
-            {cardInfo && <p>{cardInfo.body}</p>}
-        </button>
-    );
+    if (isLoading) {
+        return (
+            <Box sx={{ margin: "0 auto" }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
+    if (currentUser) {
+        return (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                <CardName title="Name: " name={currentUser?.name} />
+                <CardName title="UserName: " name={currentUser?.username} />
+                <CardName title="Email: " name={currentUser?.email} />
+            </Box>
+        );
+    }
 };
