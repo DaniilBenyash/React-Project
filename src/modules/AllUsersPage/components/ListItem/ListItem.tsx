@@ -2,9 +2,8 @@ import {
     ListItem as ListItemMUI,
     ListItemButton,
     ListItemText,
-    Link,
 } from "@mui/material";
-
+import { Link } from "./styles";
 type ListItemProps = {
     id: string;
     name: string;

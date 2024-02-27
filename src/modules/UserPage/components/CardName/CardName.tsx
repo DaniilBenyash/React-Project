@@ -9,7 +9,7 @@ export const CardName = ({ title, name }: CardNameProps) => {
     return (
         <Box>
             <Typography variant="h5">{title}</Typography>
-            <Typography variant="h4">{name}</Typography>
+            <Typography variant="h3">{name}</Typography>
         </Box>
     );
 };
