@@ -1,6 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { FC } from "react";
 
-export const Loader: FC = (props) => {
+export const Loader = () => {
     return <CircularProgress  />;
 };

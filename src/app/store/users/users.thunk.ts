@@ -1,18 +1,26 @@
-import { jsonPlaceholderApi } from "src/shared/services";
+import { jsonPlaceholderApi } from "src/app/store/services";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { User } from "./users.types";
+import { User, UserResponse } from "./users.types";
+import { usersMapper } from './users.mappers';
+import { AxiosResponse } from "axios";
 
-const getUserById = createAsyncThunk(
+const getUserById = createAsyncThunk<
+    ReturnType<typeof usersMapper>,
+    string
+>(
     "users/getUserById",
-    async (userId: string) => {
-        const { data } = await jsonPlaceholderApi.get<User>(`/users/${userId}`);
-        return data;
+    async (userId) => {
+        const { data } = await jsonPlaceholderApi.get<UserResponse>(`/users/${userId}`);
+        return usersMapper(data);
     },
 );
 
-const getAllUsers = createAsyncThunk("users/getAllUsers", async () => {
-    const { data } = await jsonPlaceholderApi.get<User[]>(`/users`);
-    return data;
+const getAllUsers = createAsyncThunk<
+    ReturnType<typeof usersMapper>[],
+    void
+>("users/getAllUsers", async () => {
+    const { data } = await jsonPlaceholderApi.get<UserResponse[]>(`/users`);
+    return data.map(usersMapper);
 });
 
 export { getUserById, getAllUsers };

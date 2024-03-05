@@ -1,13 +1,16 @@
-import './App.css'
-import { AllUsersPage } from "../modules/AllUsersPage";
-import { Route, Routes } from "react-router-dom";
-import { UserPage } from "../modules/UserPage";
+import "./styles/global.css";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routing/router";
+import { store } from "./store/redux/store";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "./theme/ThemeProvider";
 
 export const App = () => {
     return (
-        <Routes>
-            <Route element={<AllUsersPage />} path="/" />
-            <Route element={<UserPage />} path="/users/:id" />
-        </Routes>
+        <ThemeProvider>
+            <Provider store={store}>
+                <RouterProvider router={router} />
+            </Provider>
+        </ThemeProvider>
     );
 };

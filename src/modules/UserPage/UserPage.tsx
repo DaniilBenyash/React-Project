@@ -1,29 +1,26 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { useUsersStore } from "src/app/store";
-import { CardName } from "./components/CardName";
 import { Box } from "./styles";
-import { LoaderPage } from "../LoaderPage";
+import { CardName } from "src/shared/components";
+import { Button } from "src/shared/ui-kit";
+import { useNavigate } from "react-router-dom";
 
 export const UserPage = () => {
     const { id } = useParams();
-    const { currentUser, getUserById, loading } = useUsersStore();
+    const { currentUser, getUserById } = useUsersStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getUserById(id);
     }, [getUserById, id]);
 
-    if (loading) {
-        return <LoaderPage />;
-    }
-
-    if (currentUser) {
-        return (
-            <Box>
-                <CardName title="Name:" name={currentUser?.name} />
-                <CardName title="UserName:" name={currentUser?.username} />
-                <CardName title="Email:" name={currentUser?.email} />
-            </Box>
-        );
-    }
+    return (
+        <Box>
+            <CardName title="Name:" name={currentUser?.title} />
+            <CardName title="UserName:" name={currentUser?.username} />
+            <CardName title="Email:" name={currentUser?.email} />
+            <Button text="Back" onClick={() => navigate(-1)} />
+        </Box>
+    );
 };

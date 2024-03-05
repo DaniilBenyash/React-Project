@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
-import { useUsersStore } from "src/app/store";
+import { usePostsStore } from "src/app/store";
 import { Box } from "./styles";
 import { Input } from "src/shared/ui-kit";
 import { List, ListItem } from "src/shared/components";
 
-export const AllUsersPage = () => {
+export const AllPostsPage = () => {
     const [searchValue, setSearchValue] = useState("");
-    const { users, getAllUsers } = useUsersStore();
+    const { posts, getAllPosts } = usePostsStore();
 
-    const filterUsers = (value: string) => {
+    const filterPosts = (value: string) => {
         setSearchValue(value);
     };
+
     useEffect(() => {
-        getAllUsers();
-    }, [getAllUsers]);
+        getAllPosts();
+    }, [getAllPosts]);
 
     return (
         <Box>
-            <Input onChange={filterUsers} placeholder="Search" />
-            <List title="Users">
-                {users
+            <Input onChange={filterPosts} placeholder="Search" />
+            <List title="Posts">
+                {posts
                     ?.filter(post =>
                         post.title
                             .toLowerCase()

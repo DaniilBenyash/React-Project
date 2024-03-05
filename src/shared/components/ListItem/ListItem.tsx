@@ -4,17 +4,20 @@ import {
     ListItemText,
 } from "@mui/material";
 import { Link } from "./styles";
+import { useLocation } from "react-router-dom";
+
 type ListItemProps = {
     id: string;
-    name: string;
+    title: string;
 };
 
-export const ListItem = ({ id, name }: ListItemProps) => {
+export const ListItem = ({ id, title }: ListItemProps) => {
+    const { pathname } = useLocation();
     return (
-        <Link href={`/users/${id}`} >
+        <Link href={pathname + "/" + id}>
             <ListItemMUI>
                 <ListItemButton>
-                    <ListItemText primary={name} />
+                    <ListItemText primary={title} />
                 </ListItemButton>
             </ListItemMUI>
         </Link>
